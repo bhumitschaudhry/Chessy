@@ -12,7 +12,7 @@ body {
 }
 
 button {
-    background-color: #b58863;
+    background-color: #7A3EA1;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -26,11 +26,11 @@ button {
 }
 
 button:hover {
-    background-color: #a37c4a;
+    background-color: #6D2E91;
 }
 
 button:active {
-    background-color: #8e6b3d;
+    background-color: #5C267D;
 }
 
 span {
@@ -79,9 +79,10 @@ span {
     gap: 20px;
 }
 
+
 .gameCode > button {
     background-color: #00000000;
-    color: #b58863;
+    color: #7A3EA1;
 
     font-size: 20px;
     font-weight: bold;
