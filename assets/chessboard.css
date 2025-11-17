@@ -291,4 +291,42 @@
     .cm-chessboard.black-and-white .coordinates .coordinate.white {
       fill: #909090; }
 
+/* Purple theme */
+.cm-chessboard.purple .board .square.white, .purple .cm-chessboard .board .square.white {
+  fill: #F0E6FF; }
+
+.cm-chessboard.purple .board .square.black, .purple .cm-chessboard .board .square.black {
+  fill: #7A3EA1; }
+
+.cm-chessboard.purple.border-type-thin .board .border, .purple .cm-chessboard.border-type-thin .board .border {
+  stroke: #7A3EA1;
+  stroke-width: 0.7%;
+  fill: #7A3EA1; }
+
+.cm-chessboard.purple.border-type-none .board .border, .purple .cm-chessboard.border-type-none .board .border {
+  stroke: #7A3EA1;
+  stroke-width: 0;
+  fill: #7A3EA1; }
+
+.cm-chessboard.purple.border-type-frame .board .border, .purple .cm-chessboard.border-type-frame .board .border {
+  fill: #F0E6FF;
+  stroke: none; }
+
+.cm-chessboard.purple.border-type-frame .board .border-inner, .purple .cm-chessboard.border-type-frame .board .border-inner {
+  fill: #7A3EA1;
+  stroke: #7A3EA1;
+  stroke-width: 0.7%; }
+
+.cm-chessboard.purple .coordinates, .purple .cm-chessboard .coordinates {
+  pointer-events: none;
+  user-select: none; }
+  .cm-chessboard.purple .coordinates .coordinate, .purple .cm-chessboard .coordinates .coordinate {
+    fill: #6D2E91;
+    font-size: 7px;
+    cursor: default; }
+    .cm-chessboard.purple .coordinates .coordinate.black, .purple .cm-chessboard .coordinates .coordinate.black {
+      fill: #EDE4FF; }
+    .cm-chessboard.purple .coordinates .coordinate.white, .purple .cm-chessboard .coordinates .coordinate.white {
+      fill: #6D2E91; }
+
 /*# sourceMappingURL=chessboard.css.map */
