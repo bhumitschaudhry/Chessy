@@ -21,6 +21,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/onnxjs/dist/onnx.min.js"></script>
 
+    <script>
+      // Normalize model path for GitHub Pages (fix "../models/..." to "./models/...")
+      (function() {
+        if (window.onnx && onnx.InferenceSession && onnx.InferenceSession.prototype.loadModel) {
+          const originalLoadModel = onnx.InferenceSession.prototype.loadModel;
+          onnx.InferenceSession.prototype.loadModel = function(path) {
+            try {
+              if (typeof path === 'string' && path.startsWith('../models/')) {
+                path = './models/' + path.slice('../models/'.length);
+              }
+            } catch (_) {}
+            return originalLoadModel.call(this, path);
+          };
+        }
+      })();
+    </script>
+
     <link rel="stylesheet" href="board.css" />
     <link rel="stylesheet" href="main.css" />
   </head>
