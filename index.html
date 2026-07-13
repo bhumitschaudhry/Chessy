@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Little web implementation of a chess pretty small chess engine that uses ONNX.js to make predictions"
+    />
+    <title>Chessy</title>
+
+    <script src="https://unpkg.com/lodash@4.17.20"></script>
+
+    <link rel="stylesheet" href="./assets/chessboard.css" />
+    <link rel="stylesheet" href="./assets/extensions/markers/markers.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/extensions/promotion-dialog/promotion-dialog.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxjs/dist/onnx.min.js"></script>
+
+    <script>
+      (function() {
+        if (window.onnx && onnx.InferenceSession && onnx.InferenceSession.prototype.loadModel) {
+          const originalLoadModel = onnx.InferenceSession.prototype.loadModel;
+          onnx.InferenceSession.prototype.loadModel = function(path) {
+            try {
+              if (typeof path === 'string' && path.startsWith('../models/')) {
+                path = './models/' + path.slice('../models/'.length);
+              }
+            } catch (_) {}
+            return originalLoadModel.call(this, path);
+          };
+        }
+      })();
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <main class="game-area">
+        <section class="player-card" id="aiPlayerCard">
+          <div class="player-avatar"></div>
+          <div class="player-info">
+            <h2 class="player-name">Neural Engine</h2>
+            <span class="player-rating">4000</span>
+          </div>
+          <div class="turn-indicator" id="aiTurnIndicator"></div>
+        </section>
+
+        <div class="board-container">
+          <div id="board" class="board monochrome"></div>
+          <div id="modelLoading" class="model-loading hidden">
+            <span>Loading model...</span>
+          </div>
+        </div>
+
+        <section class="player-card active" id="humanPlayerCard">
+          <div class="player-avatar"></div>
+          <div class="player-info">
+            <h2 class="player-name">You</h2>
+            <span class="player-rating">Human</span>
+          </div>
+          <div class="turn-indicator active" id="humanTurnIndicator"></div>
+        </section>
+      </main>
+
+      <section class="controls">
+        <button id="flipBoardButton" class="control-button">Flip Board</button>
+        <button id="autoPlayButton" class="control-button">Auto Play</button>
+      </section>
+    </div>
+
+    <overlay id="overlay" class="overlay hidden">
+      <div class="overlay-content">
+        <h2 id="gameOverText">Game Over</h2>
+        <button id="restartButton" class="primary-button">Restart</button>
+      </div>
+    </overlay>
+
+    <script src="main.js"></script>
+  </body>
+</html>

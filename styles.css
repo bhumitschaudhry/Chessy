@@ -1,0 +1,401 @@
+/* ===================================
+   CSS CUSTOM PROPERTIES
+   =================================== */
+:root {
+  /* Colors - Monochrome Palette */
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666666;
+  --color-border: #e0e0e0;
+
+  /* Board Colors */
+  --color-square-light: #d9d9d9;
+  --color-square-dark: #6b6b6b;
+  --color-square-selected: #5a5a5a;
+  --color-square-last-move: #7a7a7a;
+  --color-square-valid: #9a9a9a;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  /* Transitions */
+  --transition-base: 150ms ease;
+}
+
+/* ===================================
+   BASE STYLES
+   =================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* ===================================
+   APP CONTAINER
+   =================================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--spacing-md);
+  gap: var(--spacing-lg);
+}
+
+/* ===================================
+   GAME AREA
+   =================================== */
+.game-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ===================================
+   PLAYER CARDS
+   =================================== */
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.player-card.active {
+  border-left: 2px solid var(--color-text);
+}
+
+.player-avatar {
+  width: clamp(36px, 8vw, 48px);
+  height: clamp(36px, 8vw, 48px);
+  border-radius: 50%;
+  background-color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+}
+
+.player-name {
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.player-rating {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  color: var(--color-text-muted);
+}
+
+.turn-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.turn-indicator.active {
+  background-color: var(--color-text);
+  border: 1px solid var(--color-text);
+}
+
+/* ===================================
+   BOARD CONTAINER
+   =================================== */
+.board-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.board {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom monochrome board theme */
+.cm-chessboard.monochrome .board .square.white {
+  fill: var(--color-square-light);
+}
+
+.cm-chessboard.monochrome .board .square.black {
+  fill: var(--color-square-dark);
+}
+
+.cm-chessboard.monochrome.border-type-frame .board .border {
+  fill: var(--color-square-light);
+  stroke: none;
+}
+
+.cm-chessboard.monochrome.border-type-frame .board .border-inner {
+  fill: var(--color-square-dark);
+  stroke: none;
+}
+
+.cm-chessboard.monochrome .coordinates .coordinate {
+  fill: var(--color-text-muted);
+  font-size: clamp(6px, 1.5vw, 7px);
+  cursor: default;
+}
+
+.cm-chessboard.monochrome .coordinates .coordinate.black {
+  fill: var(--color-text-muted);
+}
+
+.cm-chessboard.monochrome .coordinates .coordinate.white {
+  fill: var(--color-text-muted);
+}
+
+/* Valid move highlights - flat overlays */
+.cm-chessboard.monochrome .markers .marker.marker-square {
+  fill: var(--color-square-valid);
+  opacity: 0.5;
+}
+
+.cm-chessboard.monochrome .markers .marker.marker-dot {
+  fill: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.cm-chessboard.monochrome .markers .marker.marker-frame {
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5px;
+  opacity: 0.5;
+}
+
+.cm-chessboard.monochrome .markers .marker.marker-frame-primary {
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5px;
+  opacity: 0.5;
+}
+
+.cm-chessboard.monochrome .markers .marker.marker-circle {
+  stroke: var(--color-text-muted);
+  stroke-width: 2px;
+  opacity: 0.5;
+}
+
+.cm-chessboard.monochrome .markers .marker.marker-circle-primary {
+  stroke: var(--color-text-muted);
+  stroke-width: 2px;
+  opacity: 0.5;
+}
+
+/* Selected piece highlight */
+.cm-chessboard.monochrome .square.highlight-selected {
+  fill: var(--color-square-selected);
+}
+
+/* Last move highlight */
+.cm-chessboard.monochrome .square.highlight-last {
+  fill: var(--color-square-last-move);
+}
+
+/* ===================================
+   MODEL LOADING
+   =================================== */
+.model-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.model-loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ===================================
+   CONTROLS
+   =================================== */
+.controls {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 520px;
+}
+
+.control-button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: border-color var(--transition-base);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.control-button:hover {
+  border-color: var(--color-text-muted);
+}
+
+.control-button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 1px;
+}
+
+.control-button:active {
+  border-color: var(--color-text);
+}
+
+/* ===================================
+   OVERLAY
+   =================================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.overlay-content {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  text-align: center;
+  max-width: 90vw;
+}
+
+.overlay-content h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-lg);
+}
+
+.primary-button {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: background-color var(--transition-base);
+  min-height: 44px;
+  min-width: 48px;
+}
+
+.primary-button:hover {
+  background-color: #000000;
+}
+
+.primary-button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.primary-button:active {
+  background-color: #333333;
+}
+
+/* ===================================
+   ACCESSIBILITY
+   =================================== */
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #000000;
+  }
+
+  .control-button,
+  .primary-button {
+    border-width: 2px;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
