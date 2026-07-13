@@ -10,9 +10,14 @@ const modelLoadingSpan = document.getElementById("modelLoading");
 
 let model = null
 modelLoadingSpan.classList.toggle("hidden", false);
-nn.loadModel("./../models/TORCH_100EPOCHS.onnx").then(m => {
+modelLoadingSpan.style.pointerEvents = "none";
+modelLoadingSpan.style.background = "transparent";
+nn.loadModel("./models/TORCH_100EPOCHS.onnx").then(m => {
   console.log("Model loaded");
   model = m;
+  modelLoadingSpan.classList.toggle("hidden", true);
+}).catch(err => {
+  console.error("Failed to load model:", err);
   modelLoadingSpan.classList.toggle("hidden", true);
 });
 
@@ -54,6 +59,7 @@ restartButton.addEventListener("click", () => {
   chess.reset();
   board.setPosition(chess.fen(), true);
   overlay.classList.toggle("hidden", true);
+  board.disableMoveInput();
   flipTurn();
 });
 
@@ -154,7 +160,7 @@ function inputHandler(event) {
           continue;
         }
 
-        event.chessboard.showPromotionDialog(event.squareTo, chessboardJS.COLOR.white, (result) => {
+        event.chessboard.showPromotionDialog(event.squareTo, chess.turn() === 'w' ? chessboardJS.COLOR.white : chessboardJS.COLOR.black, (result) => {
           if (result.type === chessboardJSPromotion.PROMOTION_DIALOG_RESULT_TYPE.pieceSelected) {
             const move = {from: event.squareFrom, to: event.squareTo, promotion: result.piece.charAt(1)};
               
@@ -172,4 +178,4 @@ function inputHandler(event) {
   }
 }
 
-board.enableMoveInput(inputHandler, chessboardJS.COLOR.white);
+flipTurn();
